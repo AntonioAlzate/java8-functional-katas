@@ -14,6 +14,11 @@ public class Kata6 {
     public static String execute() {
         List<Movie> movies = DataUtil.getMovies();
 
-        return "someUrl";
+        return movies.stream().flatMap(movie -> movie.getBoxarts().stream())
+                .reduce((acumulado, actual) ->
+                        acumulado.getHeight() * acumulado.getWidth() > actual.getHeight() * actual.getWidth() ?
+                        acumulado : actual)
+                .get()
+                .getUrl();
     }
 }
